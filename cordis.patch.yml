@@ -1,0 +1,5 @@
+# Adds the one-line-prototype plugin to a DeepSeek Harness profile.
+# `name` must match the package name in package.json.
+- insert:
+    - id: one-line-prototype
+      name: one-line-prototype

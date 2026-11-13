@@ -1,0 +1,41 @@
+{
+  "name": "one-line-prototype",
+  "version": "0.1.1",
+  "private": true,
+  "description": "从需求到原型：一句话需求，问清关键规则后产出精简 PRD、流程图、可交互原型和确认单的 Agent skill，可作为 DeepSeek Harness 插件安装。",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "lib/index.mjs",
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "skills",
+    "cordis.patch.yml",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "agent-skill",
+    "prd",
+    "prototype"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sunnyshinnny776/one-line-prototype.git"
+  },
+  "homepage": "https://github.com/Sunnyshinnny776/one-line-prototype",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
