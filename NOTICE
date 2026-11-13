@@ -1,0 +1,38 @@
+one-line-prototype
+Copyright 2026 Sunnyshinnny776
+
+This work is licensed under the Apache License, Version 2.0. See LICENSE.
+
+Derived from PM Agentic Cookbook
+================================
+This repository derives from PM Agentic Cookbook:
+https://github.com/Sunnyshinnny776/pm-agentic-cookbook
+Commit a111eebc673c1454a48cacfd04913234b00775b6.
+Its notice is reproduced verbatim below.
+
+PM Agentic Cookbook
+Copyright 2026 Sunnyshinnny776 and contributors
+
+This work is licensed under the Apache License, Version 2.0.
+The license does not grant permission to use the project's trade names,
+trademarks, service marks, or product names, except for reasonable and
+customary use in describing the origin of the work and reproducing this notice.
+
+Upstream of create-prd
+======================
+PM Agentic Cookbook's create-prd derives from pmYangKun/create-prd-skill.
+Its notice is reproduced verbatim below.
+References to the main or community branches in that notice refer to the linked upstream repository.
+
+create-prd — B端 PRD 生成
+Copyright 2026 杨堃 (pmYangKun)
+https://github.com/pmYangKun/create-prd-skill
+
+本仓库 main 分支的全部历史版本（包括本文件添加之前已发布的所有版本）均按 Apache License 2.0 授权，协议全文见 LICENSE。
+community/* 等社区扩展分支包含其他贡献者的修改，其授权以各分支内的说明为准。
+
+方法论来源：杨堃《决胜B端（第二版）》《决胜体验设计》《决胜B端 PRD 模板 v2.0》。
+
+基于本仓库修改或再发布时，请保留本 NOTICE 文件，并在修改过的文件中注明已作修改。
+
+The files in this repository include modifications. Modified files carry notices.

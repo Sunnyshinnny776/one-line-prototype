@@ -1,0 +1,338 @@
+<!-- Derived from PM Agentic Cookbook (skills/ui-generator); modified. SPDX-License-Identifier: Apache-2.0. See LICENSE and NOTICE. -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>确认单</title>
+<style>
+/* ================= 设计令牌：原样内嵌 design-tokens.css，不修改 ================= */
+/*
+ * ToB Design Tokens — 通用 ToB 产品视觉规范
+ * 
+ * 用途：作为 AI 生成 ToB 原型时的视觉约束输入
+ * 适配：Tailwind CSS
+ * 配套：宿主没有 UI/UX 规则时，与 references/default-uiux-rules.md 一起使用
+ */
+
+:root {
+  /* ========================================
+     色彩系统 (Color System)
+     ======================================== */
+
+  /* 品牌色 - 专业沉稳的绿色系 */
+  --color-primary-50:  #f0fdf4;
+  --color-primary-100: #dcfce7;
+  --color-primary-200: #bbf7d0;
+  --color-primary-300: #86efac;
+  --color-primary-400: #4ade80;
+  --color-primary-500: #22c55e;
+  --color-primary-600: #16a34a;   /* 主色调 */
+  --color-primary-700: #15803d;   /* Hover / Active */
+  --color-primary-800: #166534;
+  --color-primary-900: #14532d;
+
+  /* 状态色 */
+  --color-success:    #16a34a;
+  --color-warning:    #ea580c;   /* orange-600 */
+  --color-error:      #dc2626;   /* red-600 */
+  --color-info:       #4b5563;   /* gray-600，信息提示用中性色 */
+  --color-processing: #2563eb;   /* blue-600 */
+
+  /* 中性色 */
+  --color-gray-50:  #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* 背景色 */
+  --color-bg-body:   #F5F7FA;
+  --color-bg-card:   #FFFFFF;
+  --color-bg-hover:  rgba(22, 163, 74, 0.04);  /* primary-50/30 */
+
+  /* ========================================
+     间距系统 (Spacing) — 基于 4px 网格
+     ======================================== */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ========================================
+     字体系统 (Typography)
+     ======================================== */
+  --font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* 字号：与 Tailwind 默认字号一致，避免令牌覆盖工具类后层级错位。
+     正文用 text-sm（14px）；紧凑表格与行内明细用 13px；页面标题用 text-2xl（24px） */
+  --text-xs:   12px;
+  --text-sm:   14px;   /* ToB 正文标准 */
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  30px;
+  --text-4xl:  36px;
+
+  /* 字重 */
+  --font-normal:   400;
+  --font-medium:   500;
+  --font-semibold: 600;
+  --font-bold:     700;
+
+  /* 行高 */
+  --leading-tight:  1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.75;
+
+  /* ========================================
+     圆角 (Border Radius)
+     ======================================== */
+  --radius-sm:   4px;
+  --radius-md:   6px;   /* 按钮、输入框 */
+  --radius-lg:   8px;   /* 卡片 */
+  --radius-xl:   12px;  /* 大面板 */
+  --radius-full: 9999px; /* 圆形 */
+
+  /* ========================================
+     阴影 (Box Shadow)
+     ======================================== */
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:  0 2px 4px rgba(0, 0, 0, 0.06);
+  --shadow-lg:  0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-xl:  0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* ========================================
+     布局 (Layout)
+     ======================================== */
+  --sidebar-width:      240px;
+  --sidebar-collapsed:  64px;
+  --header-height:      56px;
+  --content-padding:    24px;
+
+  /* ========================================
+     动画 (Animation)
+     ======================================== */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   350ms ease;
+}
+
+/* ========================================
+   通用组件样式预设
+   ======================================== */
+
+/* 卡片 */
+.tob-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-gray-100);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-6);
+}
+
+/* 表格行 hover */
+.tob-table-row:hover {
+  background-color: var(--color-bg-hover);
+}
+
+/* 页面淡入动画 */
+.tob-fade-in {
+  animation: fadeIn var(--transition-normal) ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ToB 滚动条 */
+.tob-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.tob-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-300);
+  border-radius: var(--radius-full);
+}
+.tob-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* ================= 确认单样式：不修改 ================= */
+:root {
+  --primary: var(--color-primary-600);
+  --primary-weak: color-mix(in srgb, var(--primary) 7%, #fff);
+  --primary-ink: color-mix(in srgb, var(--primary) 60%, #000);
+  --toc-width: 300px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; }
+body { font-family: var(--font-family); font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-gray-800); background: #fff; }
+[hidden] { display: none !important; }
+
+.toc { position: fixed; top: 0; bottom: 0; left: 0; width: var(--toc-width); overflow-y: auto; padding: var(--space-8) var(--space-4) var(--space-8) var(--space-6); border-right: 1px solid var(--color-gray-100); background: var(--color-gray-50); }
+.toc-title { margin: 0 0 var(--space-4); padding-left: var(--space-2); font-size: var(--text-base); font-weight: var(--font-bold); }
+.toc-group { margin: var(--space-5) 0 var(--space-1); padding-left: var(--space-2); font-size: var(--text-xs); color: var(--color-gray-400); }
+.toc-row { display: flex; align-items: center; gap: var(--space-2); padding: 6px var(--space-2); border-radius: var(--radius-md); color: var(--color-gray-600); text-decoration: none; }
+.toc-row:hover { background: var(--color-gray-100); }
+.toc-row.active { background: var(--primary-weak); color: var(--primary-ink); font-weight: var(--font-medium); }
+.toc-no { width: 20px; flex: none; text-align: right; color: var(--color-gray-400); font-variant-numeric: tabular-nums; }
+.toc-text { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dot { width: 8px; height: 8px; flex: none; border-radius: 50%; }
+
+.main { margin-left: var(--toc-width); padding: var(--space-10) var(--space-12) var(--space-12); }
+.wrap { max-width: 820px; }
+h1 { margin: 0; font-size: var(--text-2xl); font-weight: var(--font-bold); line-height: var(--leading-tight); }
+.lead { margin: var(--space-3) 0 0; color: var(--color-gray-600); }
+.counts { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); margin-top: var(--space-5); padding: var(--space-3) var(--space-4); border-radius: var(--radius-lg); background: var(--color-gray-50); color: var(--color-gray-600); }
+.counts b { color: var(--color-gray-800); font-size: var(--text-base); }
+.count { display: inline-flex; align-items: center; gap: 6px; }
+
+h2 { margin: var(--space-10) 0 var(--space-4); font-size: var(--text-lg); font-weight: var(--font-bold); }
+.card { margin-top: var(--space-4); padding: var(--space-5) var(--space-6); border: 1px solid var(--color-gray-200); border-radius: var(--radius-lg); scroll-margin-top: var(--space-6); }
+.card.active { border-color: var(--primary); }
+.card-top { display: flex; align-items: center; gap: var(--space-3); }
+.card-no { font-weight: var(--font-bold); color: var(--color-gray-500); font-variant-numeric: tabular-nums; }
+.tag { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border: 1px solid; border-radius: var(--radius-sm); font-size: var(--text-xs); }
+.card-main { margin-top: var(--space-3); font-size: var(--text-lg); font-weight: var(--font-medium); line-height: var(--leading-normal); color: var(--color-gray-900); }
+.card-rows { display: grid; grid-template-columns: 112px 1fr; gap: var(--space-2) var(--space-4); margin: var(--space-4) 0 0; padding-top: var(--space-4); border-top: 1px solid var(--color-gray-100); }
+.card-rows dt { color: var(--color-gray-500); }
+.card-rows dd { margin: 0; color: var(--color-gray-700); }
+.notes { margin: 0; padding-left: var(--space-5); color: var(--color-gray-700); }
+.notes li + li { margin-top: var(--space-2); }
+
+/* 三种类型和交互建议的标签色 */
+.t-add .dot, .dot.t-add { background: var(--color-processing); }
+.t-add.tag { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.t-open .dot, .dot.t-open { background: var(--color-warning); }
+.t-open.tag { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+.t-conflict .dot, .dot.t-conflict { background: var(--color-error); }
+.t-conflict.tag { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+.t-advice .dot, .dot.t-advice { background: var(--color-gray-400); }
+.t-advice.tag { background: var(--color-gray-50); color: var(--color-gray-600); border-color: var(--color-gray-200); }
+
+@media (max-width: 900px) {
+  .toc { position: static; width: auto; max-height: 40vh; border-right: 0; border-bottom: 1px solid var(--color-gray-100); padding: var(--space-5) var(--space-4); }
+  .main { margin-left: 0; padding: var(--space-6) var(--space-4) var(--space-10); }
+  .card { padding: var(--space-4); }
+  .card-rows { grid-template-columns: 1fr; gap: 0; }
+  .card-rows dd { margin-bottom: var(--space-2); }
+}
+</style>
+</head>
+<body>
+<nav class="toc" id="toc" aria-label="目录"></nav>
+<main class="main"><div class="wrap" id="sheet"></div></main>
+
+<script>
+/* ================= 确认单内容：只改这一段 =================
+   title：需求名称。
+   items：需要你确认的内容，按影响范围从大到小排，一条一个对象。
+     no 是编号，从 1 起；type 是"我补的""未确认""和历史文档冲突"三选一；where 是位置，写到能直接找到的程度；
+     prd 是 PRD 里写的；basis 是依据；fix 是不对的话要改哪里；short 是目录里显示的简称，可省略，省略时用 where 去掉开头的章节号。
+   advice：交互建议，只在用户提供了界面参考时写，no 接着 items 的最大编号往下排。没有就写 []。
+     element 是页面元素；now 是现状；suggest 是建议做法；basis 是依据。
+   notes：说明，一条一句。
+   修改后：用户确认过或改过的条目整条删掉；新加的条目 no 接着全文最大编号往下排；已有条目的 no 不改。
+   下面是示例内容，生成时整段替换。 */
+const SHEET = {
+  title: '退货申请',
+  items: [
+    { no: 1, type: '我补的', where: '3.1.3 R3 单次退货金额上限', prd: '单次退货金额超过 5000 元时，区域经理和财务各审核一次', basis: '你没有提到金额限制。门店单件商品多在几百元，一次退货通常一两件；超过 5000 元的退货很少见，金额这么大时多一道财务审核，平时的退货不受影响', fix: '流程图、审核页面和状态流转都要去掉财务审核这一步' },
+    { no: 2, type: '未确认', where: '3.1.3 R5 撤回条件', prd: '待审核状态下店员可以撤回申请', basis: '没问到，按推荐值写的', fix: 'R5 和申请详情页的"撤回"按钮' },
+    { no: 3, type: '我补的', where: '3.1.2 申请表单，退货原因', short: '申请表单的退货原因', prd: '选项为质量问题、尺码不合适、顾客改变主意、其他', basis: '门店退货的原因主要是商品质量、尺码和顾客改主意三类，加"其他"兜底；你没有给选项', fix: '只影响这个选项组' },
+    { no: 4, type: '我补的', where: '3.1.2 申请列表，每页条数', short: '申请列表每页条数', prd: '10 条', basis: '界面默认值，不影响业务规则', fix: '只影响列表分页' }
+  ],
+  advice: [],
+  notes: [
+    '你没有提供历史文档，PRD 用的是默认结构。',
+    '你没有提供界面参考，原型用的是默认的后台样式。原型右上角的"规则标注"开关可以关掉规则灯泡，用于演示。',
+    '原型里已有页面的内容和示例数据是示意，不代表现有系统的实际字段。'
+  ]
+};
+</script>
+
+<script>
+/* ================= 确认单脚本：不修改 ================= */
+(function () {
+  const TYPES = { '我补的': 't-add', '未确认': 't-open', '和历史文档冲突': 't-conflict' };
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const sheet = document.getElementById('sheet');
+  const toc = document.getElementById('toc');
+  const live = (SHEET.items || []).map((x, i) => Object.assign({ no: i + 1 }, x));
+  const liveAdvice = (SHEET.advice || []).map((x, i) => Object.assign({ no: live.length + i + 1 }, x, { type: '交互建议' }));
+
+  document.title = (SHEET.title || '') + '确认单';
+  sheet.appendChild(el('h1', '', (SHEET.title || '') + '确认单'));
+  sheet.appendChild(el('p', 'lead', '只给你本人看，不随 PRD 和原型发出。要改哪条，在对话里直接说，例如"第 1 条改成 3000 元"。'));
+
+  const counts = el('div', 'counts');
+  const total = el('span'); total.append('共 ', el('b', '', String(live.length + liveAdvice.length)), ' 条'); counts.appendChild(total);
+  Object.keys(TYPES).forEach(t => {
+    const n = live.filter(x => x.type === t).length;
+    if (!n) return;
+    const c = el('span', 'count ' + TYPES[t]); c.append(el('span', 'dot'), t + ' ' + n); counts.appendChild(c);
+  });
+  if (liveAdvice.length) { const c = el('span', 'count t-advice'); c.append(el('span', 'dot'), '交互建议 ' + liveAdvice.length); counts.appendChild(c); }
+  sheet.appendChild(counts);
+  toc.appendChild(el('div', 'toc-title', '目录'));
+
+  function section(title, list, rows) {
+    if (!list.length) return;
+    sheet.appendChild(el('h2', '', title));
+    toc.appendChild(el('div', 'toc-group', title));
+    list.forEach(x => {
+      const cls = TYPES[x.type] || 't-advice';
+      const card = el('section', 'card'); card.id = 'item-' + x.no;
+      const top = el('div', 'card-top'); top.append(el('span', 'card-no', '#' + x.no), el('span', 'tag ' + cls, x.type)); card.appendChild(top);
+      card.appendChild(el('div', 'card-main', rows.main(x)));
+      const dl = el('dl', 'card-rows');
+      rows.list.forEach(([k, f]) => { dl.append(el('dt', '', k), el('dd', '', x[f] || '')); });
+      card.appendChild(dl);
+      sheet.appendChild(card);
+      const a = el('a', 'toc-row ' + cls); a.href = '#item-' + x.no; a.dataset.no = x.no;
+      a.append(el('span', 'toc-no', String(x.no)), el('span', 'toc-text', x.short || String(x.where || x.element || '').replace(/^\d+(\.\d+)*\s*/, '')), el('span', 'dot'));
+      a.title = x.where || x.element || '';
+      toc.appendChild(a);
+    });
+  }
+  section('需要你确认的内容', live, { main: x => x.prd, list: [['位置', 'where'], ['依据', 'basis'], ['不对的话要改哪里', 'fix']] });
+  section('交互建议', liveAdvice, { main: x => x.suggest, list: [['页面元素', 'element'], ['现状', 'now'], ['依据', 'basis']] });
+  if ((SHEET.notes || []).length) {
+    sheet.appendChild(el('h2', '', '说明')); sheet.lastChild.id = 'notes';
+    const ul = el('ul', 'notes'); SHEET.notes.forEach(n => ul.appendChild(el('li', '', n))); sheet.appendChild(ul);
+    toc.appendChild(el('div', 'toc-group', '说明'));
+    const a = el('a', 'toc-row'); a.href = '#notes'; a.append(el('span', 'toc-no', ''), el('span', 'toc-text', SHEET.notes.length + ' 条说明')); toc.appendChild(a);
+  }
+
+  const cards = Array.from(document.querySelectorAll('.card'));
+  function highlight() {
+    let cur = cards[0];
+    cards.forEach(c => { if (c.getBoundingClientRect().top <= 120) cur = c; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2 && cards.length) cur = cards[cards.length - 1];
+    cards.forEach(c => c.classList.toggle('active', c === cur));
+    document.querySelectorAll('.toc-row[data-no]').forEach(r => {
+      const on = cur && r.dataset.no === cur.id.slice(5);
+      r.classList.toggle('active', on);
+      if (on && (r.offsetTop < toc.scrollTop || r.offsetTop > toc.scrollTop + toc.clientHeight - 40)) toc.scrollTop = r.offsetTop - 80;
+    });
+  }
+  addEventListener('scroll', highlight, { passive: true });
+  highlight();
+})();
+</script>
+</body>
+</html>

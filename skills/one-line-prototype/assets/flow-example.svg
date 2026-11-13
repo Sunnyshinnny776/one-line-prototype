@@ -1,0 +1,89 @@
+<!-- Derived from PM Agentic Cookbook (specs/ui-ux/specs/diagram_spec.md, skills/create-prd/scripts/flowgen.py); modified. SPDX-License-Identifier: Apache-2.0. See LICENSE and NOTICE. -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="928" height="964" viewBox="0 0 928 964" font-family="'PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <style>
+      .bg{fill:#FFFFFF}
+      .titlebar{fill:#4A6FA5} .titlet{fill:#fff;font-size:18px;font-weight:700;text-anchor:middle}
+      .lane{fill:#F7FAFD;stroke:#C9D6E8;stroke-width:1.2}
+      .lanehead{fill:#4A6FA5} .laneheadt{fill:#fff;font-size:14px;font-weight:600;text-anchor:middle}
+      .start{fill:#DCEAF9;stroke:#4A6FA5;stroke-width:1.2} .startt{fill:#25395a;font-size:12.5px;text-anchor:middle}
+      .n{fill:#7EA6E0;stroke:#4A6FA5;stroke-width:1.2} .nt{fill:#fff;font-size:12.5px;text-anchor:middle}
+      .dec{fill:#DCE8F7;stroke:#4A6FA5;stroke-width:1.2} .dect{fill:#25395a;font-size:12px;text-anchor:middle}
+      .doc{fill:#FFFFFF;stroke:#4A6FA5;stroke-width:1.2} .doct{fill:#25395a;font-size:12px;text-anchor:middle}
+      .term{fill:#CFE6C9;stroke:#6BA36B;stroke-width:1.4} .termt{fill:#254a25;font-size:12.5px;font-weight:600;text-anchor:middle}
+      .stop{fill:#F6D9D5;stroke:#C0625A;stroke-width:1.2} .stopt{fill:#7A2E28;font-size:12px;text-anchor:middle}
+      .edge{stroke:#4A6FA5;stroke-width:1.6;fill:none}
+      .dash{stroke:#8B98AE;stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+      .lbl{fill:#4A6FA5;font-size:11px}
+      .dlbl{fill:#7C889E;font-size:11px}
+      .lgt{fill:#5A6B85;font-size:11.5px}
+      .legendbox{fill:#FFFFFF;stroke:#C9D6E8}
+    </style>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4A6FA5"/></marker>
+    <marker id="arrd" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#8B98AE"/></marker>
+    <!-- 六种图形，中心在 (0,0) -->
+    <g id="s-start"><rect class="start" x="-70" y="-20" width="140" height="40" rx="20"/></g>
+    <g id="s-step"><rect class="n" x="-110" y="-24" width="220" height="48" rx="6"/></g>
+    <g id="s-dec"><path class="dec" d="M0,-36 L100,0 L0,36 L-100,0 Z"/></g>
+    <g id="s-state"><path class="doc" d="M-110,-26 H94 L110,-10 V20 Q55,34 0,22 T-110,22 Z"/><path class="doc" d="M94,-26 V-10 H110" fill="none"/></g>
+    <g id="s-term"><rect class="term" x="-70" y="-20" width="140" height="40" rx="20"/></g>
+    <g id="s-stop"><rect class="stop" x="-100" y="-24" width="200" height="48" rx="6"/></g>
+    <!-- 图例条目，左上角在 (0,0)，高 44。外框不在这里，每张图按绘制宽度单独画，类 legendbox -->
+    <g id="legend">
+      <rect class="start" x="14" y="13" width="30" height="18" rx="9"/><text class="lgt" x="50" y="26">起点</text>
+      <rect class="n" x="92" y="13" width="30" height="18" rx="3"/><text class="lgt" x="128" y="26">处理步骤</text>
+      <path class="dec" d="M209,13 L226,22 L209,31 L192,22 Z"/><text class="lgt" x="232" y="26">判断</text>
+      <path class="doc" d="M274,13 H298 L304,19 V29 Q296,33 289,30 T274,30 Z"/><text class="lgt" x="310" y="26">状态落地点</text>
+      <rect class="term" x="388" y="13" width="30" height="18" rx="9"/><text class="lgt" x="424" y="26">成功终点</text>
+      <rect class="stop" x="486" y="13" width="30" height="18" rx="3"/><text class="lgt" x="522" y="26">阻断</text>
+      <path class="edge" d="M562,22 H596" marker-end="url(#arr)"/><text class="lgt" x="602" y="26">同泳道流转</text>
+      <path class="dash" d="M682,22 H716" marker-end="url(#arrd)"/><text class="lgt" x="722" y="26">跨泳道流转</text>
+    </g>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="928" height="964"/>
+
+  <!-- 标题栏 -->
+  <rect class="titlebar" x="24" y="24" width="880" height="44" rx="6"/>
+  <text class="titlet" x="464" y="52">退货申请审核流程</text>
+
+  <!-- 泳道：0 号窄 280，1 号宽 540；有通道连线，1 号向右多画 60 -->
+  <rect class="lane" x="24" y="76" width="280" height="804"/>
+  <rect class="lanehead" x="24" y="76" width="280" height="36"/>
+  <text class="laneheadt" x="164" y="99">门店店员</text>
+  <rect class="lane" x="304" y="76" width="600" height="804"/>
+  <rect class="lanehead" x="304" y="76" width="600" height="36"/>
+  <text class="laneheadt" x="604" y="99">区域经理</text>
+
+  <!-- 连线先画，节点后画 -->
+  <path class="edge" d="M164,180 V232" marker-end="url(#arr)"/>
+  <path class="edge" d="M164,280 V326" marker-end="url(#arr)"/>
+  <text class="lbl" x="172" y="307">提交</text>
+  <path class="dash" d="M164,374 V400 H444 V424" marker-end="url(#arrd)"/>
+  <text class="dlbl" x="304" y="394" text-anchor="middle">通知审核</text>
+  <path class="edge" d="M444,472 V508" marker-end="url(#arr)"/>
+  <path class="edge" d="M444,580 V614" marker-end="url(#arr)"/>
+  <text class="lbl" x="452" y="601">是</text>
+  <path class="edge" d="M544,544 H604" marker-end="url(#arr)"/>
+  <text class="lbl" x="574" y="536" text-anchor="middle">否</text>
+  <path class="edge" d="M804,544 H864 V248 H274" marker-end="url(#arr)"/>
+  <text class="lbl" x="832" y="242" text-anchor="end">修改后重新提交</text>
+  <path class="dash" d="M444,662 V688 H164 V712" marker-end="url(#arrd)"/>
+  <text class="dlbl" x="304" y="682" text-anchor="middle">通知店员</text>
+  <path class="edge" d="M164,760 V812" marker-end="url(#arr)"/>
+
+  <!-- 节点：行 i 的中心 y = 160 + 96 × i -->
+  <use xlink:href="#s-start" href="#s-start" x="164" y="160"/><text class="startt" x="164" y="164">开始</text>
+  <use xlink:href="#s-step" href="#s-step" x="164" y="256"/><text class="nt" x="164" y="260">填写退货申请</text>
+  <use xlink:href="#s-state" href="#s-state" x="164" y="352"/><text class="doct" x="164" y="354">状态：待审核</text>
+  <use xlink:href="#s-step" href="#s-step" x="444" y="448"/><text class="nt" x="444" y="452">审核退货申请</text>
+  <use xlink:href="#s-dec" href="#s-dec" x="444" y="544"/><text class="dect" x="444" y="548">是否通过</text>
+  <use xlink:href="#s-stop" href="#s-stop" x="704" y="544"/><text class="stopt" x="704" y="548">状态：已驳回</text>
+  <use xlink:href="#s-state" href="#s-state" x="444" y="640"/><text class="doct" x="444" y="642">状态：已通过</text>
+  <use xlink:href="#s-step" href="#s-step" x="164" y="736"/><text class="nt"><tspan x="164" y="732">按退货地址</tspan><tspan x="164" y="748">寄回商品</tspan></text>
+  <use xlink:href="#s-term" href="#s-term" x="164" y="832"/><text class="termt" x="164" y="836">结束</text>
+
+  <!-- 图例：外框宽度等于绘制右边界减 24 -->
+  <rect class="legendbox" x="24" y="896" width="880" height="44" rx="6"/>
+  <use xlink:href="#legend" href="#legend" x="24" y="896"/>
+</svg>
