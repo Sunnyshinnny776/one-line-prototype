@@ -2,7 +2,7 @@
 
 一个 Agent skill。你给一句话需求，它问清会改变产品的几条规则，然后交给你一份精简 PRD、每个功能一张流程图、一个可交互原型，外加一份只给你自己看的确认单。
 
-当前版本：v0.1.1。
+当前版本：v0.1.2。
 
 适合有需求要交给别人实现的人：产品经理、兼做需求的产品运营和业务人员、创业者、需描述需求给外包的甲方、独立开发者。需求要有界面和规则；纯接口、纯数据任务和营销方案不适用。
 
@@ -23,6 +23,12 @@
 
 - 任意 Agent：把 `skills/one-line-prototype/` 整个目录放进你所用 Agent 的 skill 目录。目录里的 `references/` 和 `assets/` 都要保留，skill 运行时会读它们。
 - DeepSeek Harness：作为插件安装，`<profile>` 换成你用的 profile，如 `web`：
+
+  ```
+  dsh plugin --profile <profile> add one-line-prototype
+  ```
+
+  也可以直接从 GitHub 安装：
 
   ```
   dsh plugin --profile <profile> add github:Sunnyshinnny776/one-line-prototype
@@ -89,4 +95,4 @@ skill 先告诉你分级结果，再一次问完问题，每题的第一个选�
 
 One-line-prototype (从需求到原型) is an Agent skill for people who hand requirements to others to build: product managers, operations and business staff, founders, and clients briefing outsourced teams. Give it a one-line requirement; it asks up to five questions about the rules that change the product, then delivers a concise PRD, one flow diagram per feature, a clickable single-file prototype that works offline, and a confirmation sheet for you alone that lists everything it filled in on its own. Large requirements are routed to the full PM Agentic Cookbook process.
 
-To install, copy `skills/one-line-prototype/` into your agent's skill directory, keeping `references/` and `assets/`. In DeepSeek Harness you can also run `dsh plugin --profile <profile> add github:Sunnyshinnny776/one-line-prototype`. The skill's instructions and everything it produces are in Chinese. There is no English version yet.
+To install, copy `skills/one-line-prototype/` into your agent's skill directory, keeping `references/` and `assets/`. In DeepSeek Harness you can also run `dsh plugin --profile <profile> add one-line-prototype`, or install from GitHub with `add github:Sunnyshinnny776/one-line-prototype`. The skill's instructions and everything it produces are in Chinese. There is no English version yet.
