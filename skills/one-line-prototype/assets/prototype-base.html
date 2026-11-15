@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>门店退货系统</title>
 <style>
-/* ================= 设计令牌：原样内嵌 design-tokens.css，不修改 ================= */
+/* ================= 设计令牌：原样内嵌 design-tokens.css。没有界面参考时不修改；有界面参考时只改字体、圆角、背景色这类变量的值，主色改组件样式开头的 --primary ================= */
 /*
  * ToB Design Tokens — 通用 ToB 产品视觉规范
  * 
@@ -558,7 +558,6 @@ body.rules-off .rule-bulb, body.rules-off .rule-pop { display: none !important; 
     </div>
   </div>
 
-  <div class="alert alert-info" data-rule="R3"><svg class="i"><use href="#i-info"/></svg><span>区域经理在 3 个工作日内审核，超时未审核的申请会再次提醒区域经理。</span></div>
 
   <div class="card stats" id="demo-stats"></div>
 
@@ -585,7 +584,7 @@ body.rules-off .rule-bulb, body.rules-off .rule-pop { display: none !important; 
         <div class="batch-bar" id="demo-batch" hidden><span>已选 <b id="demo-picked">0</b> 条</span><button type="button" class="btn btn-text" data-open="demo-export" id="demo-export-picked">导出</button><button type="button" class="btn btn-text neutral" id="demo-unpick">取消选择</button></div>
         <div class="table-wrap">
           <table class="table">
-            <thead><tr><th class="col-check"><input type="checkbox" id="demo-pick-all" aria-label="全选"></th><th>申请单号</th><th>门店</th><th>商品</th><th class="num">退货金额（元）</th><th>状态</th><th>提交人</th><th>提交时间</th><th data-rule="R2">操作</th></tr></thead>
+            <thead><tr><th class="col-check"><input type="checkbox" id="demo-pick-all" aria-label="全选"></th><th>申请单号</th><th>门店</th><th>商品</th><th class="num">退货金额（元）</th><th data-rule="R3">状态<span class="help" data-tip="区域经理在 3 个工作日内审核，超时未审核的会再次提醒区域经理"></span></th><th>提交人</th><th>提交时间</th><th data-rule="R2">操作</th></tr></thead>
             <tbody id="demo-rows"></tbody>
           </table>
           <div class="empty" id="demo-no-result" hidden><div class="empty-icon"><svg class="i"><use href="#i-search"/></svg></div><div class="empty-title">没有符合条件的申请</div><div>换个关键词，或者清空筛选条件再查</div><button type="button" class="btn btn-outline" id="demo-reset-2">清空条件</button></div>
@@ -606,12 +605,11 @@ body.rules-off .rule-bulb, body.rules-off .rule-pop { display: none !important; 
       <p class="page-subtitle">查看导出任务的进度，下载已生成的文件。</p>
     </div>
   </div>
-  <div class="alert alert-warning" data-rule="R4"><svg class="i"><use href="#i-warning"/></svg><span>导出文件保留 30 天，过期后需要重新导出。</span></div>
   <div class="card">
     <div class="card-body">
       <div class="table-wrap">
         <table class="table">
-          <thead><tr><th>文件名</th><th>导出范围</th><th class="num">条数</th><th>状态</th><th>导出时间</th><th>操作</th></tr></thead>
+          <thead><tr><th>文件名</th><th>导出范围</th><th class="num">条数</th><th data-rule="R4">状态<span class="help" data-tip="文件生成后保留 30 天，过期后需要重新导出"></span></th><th>导出时间</th><th>操作</th></tr></thead>
           <tbody id="demo-record-rows"></tbody>
         </table>
       </div>
@@ -633,13 +631,13 @@ body.rules-off .rule-bulb, body.rules-off .rule-pop { display: none !important; 
         <dt>导出范围</dt><dd id="demo-ex-range"></dd>
         <dt>预计条数<span class="help" data-tip="按当前条件统计，导出时以实际数据为准"></span></dt><dd><span class="demo-amount" id="demo-ex-count"></span> 条</dd>
         <dt>文件名</dt><dd class="mono" id="demo-ex-name"></dd>
+        <dt>下载位置</dt><dd>文件生成后在"导出记录"里下载</dd>
       </dl>
       <form id="demo-export-form">
         <div class="field"><label class="field-label">文件格式</label>
           <div class="choices"><label class="choice"><input type="radio" name="fmt" value="xlsx" checked>Excel（.xlsx）</label><label class="choice"><input type="radio" name="fmt" value="csv">CSV（.csv）</label></div>
         </div>
       </form>
-      <div class="alert alert-info" data-rule="R4"><svg class="i"><use href="#i-info"/></svg><span>文件生成后在"导出记录"里下载，保留 30 天。</span></div>
     </div>
     <div class="overlay-foot">
       <span class="demo-foot-note">预计 1 分钟内生成</span>
@@ -849,6 +847,9 @@ const USERS = [
     if (h.matches('.overlay, .modal, .drawer')) { const hd = $('.overlay-head', h); if (hd) return [hd, $(':scope > .close-x', hd)]; }
     if (h.matches('.nav-item, .menu-item, .tab')) return [h, null];
     if (h.matches('button, a, input, select, textarea, img, svg, table, ul, ol, .btn, .badge, .input, .chip, .table-wrap')) return [h.parentNode, h.nextSibling];
+    /* 网格、纵向排列和会换行的容器：灯泡追加进去会多出一格或一行，改放进第一个子元素 */
+    const cs = getComputedStyle(h), first = h.firstElementChild;
+    if (first && (/grid/.test(cs.display) || (/flex/.test(cs.display) && (cs.flexDirection.startsWith('column') || cs.flexWrap !== 'nowrap')))) return bulbSpot(first);
     return [h, null];
   }
   function renderRuleBulbs() {
