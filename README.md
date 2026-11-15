@@ -2,7 +2,7 @@
 
 一个 Agent skill。你给一句话需求，它问清会改变产品的几条规则，然后交给你一份精简 PRD、每个功能一张流程图、一个可交互原型，外加一份只给你自己看的确认单。
 
-当前版本：v0.1.2。
+当前版本：v0.2.0。
 
 适合有需求要交给别人实现的人：产品经理、兼做需求的产品运营和业务人员、创业者、需描述需求给外包的甲方、独立开发者。需求要有界面和规则；纯接口、纯数据任务和营销方案不适用。
 
@@ -12,7 +12,7 @@
 | --- | --- | --- |
 | `<需求名>-PRD.md` | 评审人、研发、外包方 | 需求概述、范围、功能需求、验收要点四个固定章节，状态流转、异常处理、角色和权限等章节按需出现。业务规则编号为 `R1`、`R2`，验收要点对回规则编号。你给了以前写的 PRD 时，改用你的章节结构、编号方式和用语 |
 | `assets/<需求名>-<功能名>-流程图.svg` | 同上 | 纵向泳道图，每个功能一张，PRD 里直接引用 |
-| `<需求名>-原型.html` | 同上 | 单个 HTML 文件，断网也能打开。有导航、面包屑、图标和贴合业务的示例数据，看起来像一个真实的系统。规则写在界面上，对应的元素旁有小灯泡，悬停显示规则编号和内容；右上角的"规则标注"开关关掉灯泡后，可以直接拿去演示 |
+| `<需求名>-原型.html` | 同上 | 单个 HTML 文件，断网也能打开。有导航、面包屑、图标和贴合业务的示例数据，看起来像一个真实的系统。页面保持简洁，给使用人的说明收在字段和按钮旁的提示图标里；对应 PRD 规则的元素旁有小灯泡，悬停显示规则编号和内容；右上角的"规则标注"开关关掉灯泡后，可以直接拿去演示 |
 | `<需求名>-确认单-交付前必看.html` | 只给你 | 用浏览器打开，左侧是目录，右侧一条一张卡片，列出哪些规则和数值是 skill 自己补的、哪些问题没确认、哪些和你以前的文档冲突，每条写明不对的话要改哪里 |
 
 确认单的内容不会出现在 PRD 和原型里。把 PRD 和原型交出去之前，先看完确认单。
@@ -68,7 +68,7 @@ skill 先告诉你分级结果，再一次问完问题，每题的第一个选�
 - 退货申请-原型.html（直接用浏览器打开）
 - 退货申请-确认单-交付前必看.html（只给你看，不要随 PRD 发出）
 
-确认单里有 4 条要你确认，影响最大的是第 1 条：我补了一条"超过 5000 元要财务再审一次"的规则。
+确认单里有 4 条要你确认，影响最大的是第 1 条：我补了一条规则，同一笔购买的退货申请没审完之前，店员不能再提交新的。
 
 要改哪里，直接说一句，我会同时改 PRD、原型和确认单。
 ```
@@ -93,6 +93,6 @@ skill 先告诉你分级结果，再一次问完问题，每题的第一个选�
 
 ## English
 
-One-line-prototype (从需求到原型) is an Agent skill for people who hand requirements to others to build: product managers, operations and business staff, founders, and clients briefing outsourced teams. Give it a one-line requirement; it asks up to five questions about the rules that change the product, then delivers a concise PRD, one flow diagram per feature, a clickable single-file prototype that works offline, and a confirmation sheet for you alone that lists everything it filled in on its own. Large requirements are routed to the full PM Agentic Cookbook process.
+One-line-prototype (从需求到原型) is an Agent skill for people who hand requirements to others to build: product managers, operations and business staff, founders, and clients briefing outsourced teams. Give it a one-line requirement; it asks one round of questions about the rules that change the product, then delivers a concise PRD, one flow diagram per feature, a clickable single-file prototype that works offline, and a confirmation sheet for you alone that lists everything it filled in on its own. Large requirements are routed to the full PM Agentic Cookbook process.
 
 To install, copy `skills/one-line-prototype/` into your agent's skill directory, keeping `references/` and `assets/`. In DeepSeek Harness you can also run `dsh plugin --profile <profile> add one-line-prototype`, or install from GitHub with `add github:Sunnyshinnny776/one-line-prototype`. The skill's instructions and everything it produces are in Chinese. There is no English version yet.
